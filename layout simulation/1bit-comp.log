@@ -1,0 +1,37 @@
+Circuit: *** SPICE deck for cell 1bit-comp{lay} from library 6bit-comporator
+
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+WARNING: Node A is floating.
+WARNING: Node B is floating.
+WARNING: Node OUT is floating.
+
+WARNING: Less than two connections to node A2.  This node is used by VIN.
+WARNING: Less than two connections to node B2.  This node is used by VIN2.
+WARNING: Less than two connections to node A1.  This node is used by VIN3.
+WARNING: Less than two connections to node B1.  This node is used by VIN4.
+WARNING: Less than two connections to node A0.  This node is used by VIN5.
+WARNING: Less than two connections to node B0.  This node is used by VIN6.
+WARNING: Less than two connections to node OUT.  This node is used by CLOAD.
+Direct Newton iteration for .op point succeeded.
+
+Date: Fri Jan 31 16:19:16 2020
+Total elapsed time: 1.032 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 2107
+traniter = 2082
+tranpoints = 1042
+accept = 1042
+rejected = 0
+matrix size = 42
+fillins = 20
+solver = Normal
+Thread vector: 112.4/73.7[4] 28.3/19.8[4] 8.4/12.7[1] 0.9/2.3[1]  2592/500
+Matrix Compiler1: 4.49 KB object code size  6.9/6.0/[1.0]
+Matrix Compiler2: 4.13 KB object code size  3.1/7.0/[1.2]
+

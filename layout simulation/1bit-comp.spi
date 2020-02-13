@@ -1,0 +1,66 @@
+*** SPICE deck for cell 1bit-comp{lay} from library 6bit-comporator
+*** Created on Cum Oca 24, 2020 19:09:58
+*** Last revised on Per Oca 30, 2020 15:01:25
+*** Written on Cum Oca 31, 2020 16:19:13 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT _6bit-comporator__Nand2Gate FROM CELL Nand2Gate{lay}
+.SUBCKT _6bit-comporator__Nand2Gate gnd Out vdd Inp0 Inp1
+Mnmos@0 net@32 Inp0 gnd gnd nmos L=0.36U W=2.16U AS=2.948P AD=0.68P PS=9.9U PD=3.06U
+Mnmos@1 Out Inp1 net@32 gnd nmos L=0.36U W=2.16U AS=0.68P AD=1.49P PS=3.06U PD=4.26U
+Mpmos@0 vdd Inp1 Out vdd pmos L=0.36U W=2.16U AS=1.49P AD=2.543P PS=4.26U PD=8.1U
+Mpmos@1 Out Inp0 vdd vdd pmos L=0.36U W=2.16U AS=2.543P AD=1.49P PS=8.1U PD=4.26U
+.ENDS _6bit-comporator__Nand2Gate
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__inv FROM CELL 3bit-comparator.enyeni:inv{lay}
+.SUBCKT _3bit-comparator_enyeni__inv a gnd O1 vdd
+Mnmos@0 O1 a gnd gnd nmos L=0.36U W=1.08U AS=1.879P AD=1.604P PS=7.74U PD=5.22U
+Mpmos@0 O1 a vdd vdd pmos L=0.36U W=2.16U AS=2.948P AD=1.604P PS=9.9U PD=5.22U
+.ENDS _3bit-comparator_enyeni__inv
+
+*** SUBCIRCUIT _6bit-comporator__XNOR FROM CELL XNOR{lay}
+.SUBCKT _6bit-comporator__XNOR A B gnd O1 vdd
+XNand2Gat@0 gnd net@7 vdd A B _6bit-comporator__Nand2Gate
+XNand2Gat@1 gnd net@13 vdd A net@7 _6bit-comporator__Nand2Gate
+XNand2Gat@2 gnd net@17 vdd net@7 B _6bit-comporator__Nand2Gate
+XNand2Gat@3 gnd net@22 vdd net@13 net@17 _6bit-comporator__Nand2Gate
+Xinv@0 net@22 gnd O1 vdd _3bit-comparator_enyeni__inv
+.ENDS _6bit-comporator__XNOR
+
+*** SUBCIRCUIT _6bit-comporator__and FROM CELL and{lay}
+.SUBCKT _6bit-comporator__and A B gnd O1 vdd
+XNand2Gat@0 gnd net@9 vdd B A _6bit-comporator__Nand2Gate
+Xinv@0 net@9 gnd O1 vdd _3bit-comparator_enyeni__inv
+.ENDS _6bit-comporator__and
+
+*** SUBCIRCUIT _6bit-comporator__inv FROM CELL inv{lay}
+.SUBCKT _6bit-comporator__inv a gnd O1 vdd
+Mnmos@0 O1 a gnd gnd nmos L=0.36U W=1.08U AS=1.879P AD=1.604P PS=7.74U PD=5.22U
+Mpmos@0 O1 a vdd vdd pmos L=0.36U W=2.16U AS=2.948P AD=1.604P PS=9.9U PD=5.22U
+.ENDS _6bit-comporator__inv
+
+*** TOP LEVEL CELL: 1bit-comp{lay}
+XXNOR@0 in1 in2 gnd den1 vdd _6bit-comporator__XNOR
+Xand@0 A net@30 gnd in1 vdd _6bit-comporator__and
+Xand@1 net@60 B gnd in2 vdd _6bit-comporator__and
+Xand@2 En den1 gnd O2 vdd _6bit-comporator__and
+Xand@3 in1 En gnd O1 vdd _6bit-comporator__and
+Xinv@0 A gnd net@60 vdd _6bit-comporator__inv
+Xinv@1 B gnd net@30 vdd _6bit-comporator__inv
+
+* Spice Code nodes in cell cell '1bit-comp{lay}'
+vdd Vdd 0 DC 5
+vin A2 0 DC 5
+vin2 B2 0 DC 0
+vin3 A1 0 DC 5
+vin4 B1 0 DC 0
+vin5 A0 0 DC 5
+vin6 B0 0 DC 0
+vin7 En 0 DC 5
+cload Out 0 50fF
+.tran 100ns
+.include C5_models.txt
+.END
+.END
+.END

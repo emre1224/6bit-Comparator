@@ -1,0 +1,31 @@
+# header information:
+HCMOScells2|9.07
+
+# Views:
+Vicon|ic
+
+# Technologies:
+Tmocmos|ScaleFORmocmos()D180.0|mocmosAnalog()BT|mocmosNumberOfMetalLayers()I3
+Ttft|ScaleFORtft()D180.0
+
+# Cell inv;1{ic}
+Cinv;1{ic}||artwork|1580465754220|1580465754267|E|IO_dummy_object()Sinv;1{ic}|IO_true_library()S6bit-comporator
+Ngeneric:Facet-Center|art@0||0|0||||AV
+Ngeneric:Invisible-Pin|pin@0||0|0||||
+Ngeneric:Universal-Pin|pin@1||-2|5|-1|-1||
+Ngeneric:Universal-Pin|pin@2||6|5|-1|-1||
+Ea||D5G2;|pin@1||U
+Ey||D5G2;|pin@2||U
+X
+
+# Cell nor2;1{ic}
+Cnor2;1{ic}||artwork|1580465754220|1580465754267|E|IO_dummy_object()Snor2;1{ic}|IO_true_library()S6bit-comporator
+Ngeneric:Facet-Center|art@0||0|0||||AV
+Ngeneric:Invisible-Pin|pin@0||0|0||||
+Ngeneric:Universal-Pin|pin@1||-1.25|3|-1|-1||
+Ngeneric:Universal-Pin|pin@2||-1.25|7|-1|-1||
+Ngeneric:Universal-Pin|pin@3||7|5|-1|-1||
+Ea||D5G2;|pin@2||U
+Eb||D5G2;|pin@1||U
+Ey||D5G2;|pin@3||U
+X

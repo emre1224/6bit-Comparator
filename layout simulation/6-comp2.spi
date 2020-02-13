@@ -1,0 +1,141 @@
+*** SPICE deck for cell 6-comp{lay} from library 6-comp.en.yeni
+*** Created on Çar Oca 29, 2020 20:50:25
+*** Last revised on Çar Oca 29, 2020 22:42:41
+*** Written on Per Oca 30, 2020 14:57:50 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__inv FROM CELL 3bit-comparator.enyeni:inv{lay}
+.SUBCKT _3bit-comparator_enyeni__inv a gnd O1 vdd
+Mnmos@0 O1 a gnd gnd nmos L=0.36U W=1.08U AS=1.879P AD=1.604P PS=7.74U PD=5.22U
+Mpmos@0 O1 a vdd vdd pmos L=0.36U W=2.16U AS=2.948P AD=1.604P PS=9.9U PD=5.22U
+.ENDS _3bit-comparator_enyeni__inv
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__std_nor3 FROM CELL 3bit-comparator.enyeni:std_nor3{lay}
+.SUBCKT _3bit-comparator_enyeni__std_nor3 a b c gnd vdd y
+Mnmos@3 gnd b y gnd nmos L=0.36U W=1.08U AS=1.094P AD=1.555P PS=3.69U PD=5.22U
+Mnmos@4 y a gnd gnd nmos L=0.36U W=1.08U AS=1.555P AD=1.094P PS=5.22U PD=3.69U
+Mnmos@5 y c gnd gnd nmos L=0.36U W=1.08U AS=1.555P AD=1.094P PS=5.22U PD=3.69U
+Mpmos@3 net@71 b net@59 vdd pmos L=0.36U W=2.16U AS=0.729P AD=0.729P PS=3.24U PD=3.24U
+Mpmos@4 net@59 a vdd vdd pmos L=0.36U W=2.16U AS=4.568P AD=0.729P PS=13.5U PD=3.24U
+Mpmos@5 y c net@71 vdd pmos L=0.36U W=2.16U AS=0.729P AD=1.094P PS=3.24U PD=3.69U
+.ENDS _3bit-comparator_enyeni__std_nor3
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__3-or FROM CELL 3bit-comparator.enyeni:3-or{lay}
+.SUBCKT _3bit-comparator_enyeni__3-or a b c gnd O1 vdd
+Xinv@0 net@17 gnd O1 vdd _3bit-comparator_enyeni__inv
+Xstd_nor3@0 a b c gnd vdd net@17 _3bit-comparator_enyeni__std_nor3
+.ENDS _3bit-comparator_enyeni__3-or
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__Nor2Gate FROM CELL 3bit-comparator.enyeni:Nor2Gate{lay}
+.SUBCKT _3bit-comparator_enyeni__Nor2Gate gnd Out vdd Inp0 Inp1
+Mnmos@0 Out Inp0 gnd gnd NMOS L=0.36U W=1.08U AS=1.474P AD=1.102P PS=5.94U PD=3.54U
+Mnmos@1 gnd Inp1 Out gnd NMOS L=0.36U W=1.08U AS=1.102P AD=1.474P PS=3.54U PD=5.94U
+Mpmos@0 net@24 Inp0 vdd vdd PMOS L=0.36U W=2.16U AS=2.948P AD=0.729P PS=9.9U PD=3.24U
+Mpmos@1 Out Inp1 net@24 vdd PMOS L=0.36U W=2.16U AS=0.729P AD=1.102P PS=3.24U PD=3.54U
+.ENDS _3bit-comparator_enyeni__Nor2Gate
+
+*** SUBCIRCUIT _6-comp_en_yeni__Nand2Gate FROM CELL Nand2Gate{lay}
+.SUBCKT _6-comp_en_yeni__Nand2Gate gnd Out vdd Inp0 Inp1
+Mnmos@0 net@32 Inp0 gnd gnd nmos L=0.36U W=2.16U AS=2.948P AD=0.68P PS=9.9U PD=3.06U
+Mnmos@1 Out Inp1 net@32 gnd nmos L=0.36U W=2.16U AS=0.68P AD=1.49P PS=3.06U PD=4.26U
+Mpmos@0 vdd Inp1 Out vdd pmos L=0.36U W=2.16U AS=1.49P AD=2.543P PS=4.26U PD=8.1U
+Mpmos@1 Out Inp0 vdd vdd pmos L=0.36U W=2.16U AS=2.543P AD=1.49P PS=8.1U PD=4.26U
+.ENDS _6-comp_en_yeni__Nand2Gate
+
+*** SUBCIRCUIT _6-comp_en_yeni__and FROM CELL and{lay}
+.SUBCKT _6-comp_en_yeni__and A B gnd O1 vdd
+XNand2Gat@0 gnd net@9 vdd B A _6-comp_en_yeni__Nand2Gate
+Xinv@0 net@9 gnd O1 vdd _3bit-comparator_enyeni__inv
+.ENDS _6-comp_en_yeni__and
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__Nand2Gate FROM CELL 3bit-comparator.enyeni:Nand2Gate{lay}
+.SUBCKT _3bit-comparator_enyeni__Nand2Gate gnd Out vdd Inp0 Inp1
+Mnmos@0 net@32 Inp0 gnd gnd nmos L=0.36U W=2.16U AS=2.948P AD=0.68P PS=9.9U PD=3.06U
+Mnmos@1 Out Inp1 net@32 gnd nmos L=0.36U W=2.16U AS=0.68P AD=1.49P PS=3.06U PD=4.26U
+Mpmos@0 vdd Inp1 Out vdd pmos L=0.36U W=2.16U AS=1.49P AD=2.543P PS=4.26U PD=8.1U
+Mpmos@1 Out Inp0 vdd vdd pmos L=0.36U W=2.16U AS=2.543P AD=1.49P PS=8.1U PD=4.26U
+.ENDS _3bit-comparator_enyeni__Nand2Gate
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__XNOR FROM CELL 3bit-comparator.enyeni:XNOR{lay}
+.SUBCKT _3bit-comparator_enyeni__XNOR A B gnd O1 vdd
+XNand2Gat@0 gnd net@7 vdd A B _3bit-comparator_enyeni__Nand2Gate
+XNand2Gat@1 gnd net@13 vdd A net@7 _3bit-comparator_enyeni__Nand2Gate
+XNand2Gat@2 gnd net@17 vdd net@7 B _3bit-comparator_enyeni__Nand2Gate
+XNand2Gat@3 gnd net@22 vdd net@13 net@17 _3bit-comparator_enyeni__Nand2Gate
+Xinv@0 net@22 gnd O1 vdd _3bit-comparator_enyeni__inv
+.ENDS _3bit-comparator_enyeni__XNOR
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__and FROM CELL 3bit-comparator.enyeni:and{lay}
+.SUBCKT _3bit-comparator_enyeni__and A B gnd O1 vdd
+XNand2Gat@0 gnd net@9 vdd B A _3bit-comparator_enyeni__Nand2Gate
+Xinv@0 net@9 gnd O1 vdd _3bit-comparator_enyeni__inv
+.ENDS _3bit-comparator_enyeni__and
+
+*** SUBCIRCUIT _3bit-comparator_enyeni__1bit FROM CELL 3bit-comparator.enyeni:1bit{lay}
+.SUBCKT _3bit-comparator_enyeni__1bit A B den1 En gnd in1 in2 O1 O2 vdd
+XXNOR@0 in1 in2 gnd den1 vdd _3bit-comparator_enyeni__XNOR
+Xand@0 A net@30 gnd in1 vdd _3bit-comparator_enyeni__and
+Xand@1 net@60 B gnd in2 vdd _3bit-comparator_enyeni__and
+Xand@2 En den1 gnd O2 vdd _3bit-comparator_enyeni__and
+Xand@3 in1 En gnd O1 vdd _3bit-comparator_enyeni__and
+Xinv@0 A gnd net@60 vdd _3bit-comparator_enyeni__inv
+Xinv@1 B gnd net@30 vdd _3bit-comparator_enyeni__inv
+.ENDS _3bit-comparator_enyeni__1bit
+
+*** SUBCIRCUIT _6-comp_en_yeni__Nor2Gate FROM CELL Nor2Gate{lay}
+.SUBCKT _6-comp_en_yeni__Nor2Gate gnd Out vdd Inp0 Inp1
+Mnmos@0 Out Inp0 gnd gnd NMOS L=0.36U W=1.08U AS=1.474P AD=1.102P PS=5.94U PD=3.54U
+Mnmos@1 gnd Inp1 Out gnd NMOS L=0.36U W=1.08U AS=1.102P AD=1.474P PS=3.54U PD=5.94U
+Mpmos@0 net@24 Inp0 vdd vdd PMOS L=0.36U W=2.16U AS=2.948P AD=0.729P PS=9.9U PD=3.24U
+Mpmos@1 Out Inp1 net@24 vdd PMOS L=0.36U W=2.16U AS=0.729P AD=1.102P PS=3.24U PD=3.54U
+.ENDS _6-comp_en_yeni__Nor2Gate
+
+*** SUBCIRCUIT _6-comp_en_yeni__inv FROM CELL inv{lay}
+.SUBCKT _6-comp_en_yeni__inv a gnd O1 vdd
+Mnmos@0 O1 a gnd gnd nmos L=0.36U W=1.08U AS=1.879P AD=1.604P PS=7.74U PD=5.22U
+Mpmos@0 O1 a vdd vdd pmos L=0.36U W=2.16U AS=2.948P AD=1.604P PS=9.9U PD=5.22U
+.ENDS _6-comp_en_yeni__inv
+
+*** SUBCIRCUIT _6-comp_en_yeni__or2 FROM CELL or2{lay}
+.SUBCKT _6-comp_en_yeni__or2 A B gnd O1 vdd
+XNor2Gate@0 gnd net@31 vdd A B _6-comp_en_yeni__Nor2Gate
+Xinv@3 net@31 gnd O1 vdd _6-comp_en_yeni__inv
+.ENDS _6-comp_en_yeni__or2
+
+*** TOP LEVEL CELL: 6-comp{lay}
+X_3-or@0 net@19 net@40 net@30 gnd net@29 vdd _3bit-comparator_enyeni__3-or
+X_3-or@1 net@125 net@111 net@109 gnd net@136 vdd _3bit-comparator_enyeni__3-or
+XNor2Gate@0 gnd net@247 vdd net@29 net@0 _3bit-comparator_enyeni__Nor2Gate
+XNor2Gate@1 gnd net@143 vdd net@136 O3 _3bit-comparator_enyeni__Nor2Gate
+Xand@0 net@0 net@143 gnd net@455 vdd _6-comp_en_yeni__and
+Xdeneme@0 A5 B5 deneme@0_den1 En gnd deneme@0_in1 deneme@0_in2 net@19 net@44 vdd _3bit-comparator_enyeni__1bit
+Xdeneme@1 A4 B4 deneme@1_den1 net@44 gnd deneme@1_in1 deneme@1_in2 net@30 net@8 vdd _3bit-comparator_enyeni__1bit
+Xdeneme@2 A3 B3 deneme@2_den1 net@8 gnd deneme@2_in1 deneme@2_in2 net@40 net@0 vdd _3bit-comparator_enyeni__1bit
+Xdeneme@3 A2 B2 deneme@3_den1 net@0 gnd deneme@3_in1 deneme@3_in2 net@125 net@153 vdd _3bit-comparator_enyeni__1bit
+Xdeneme@4 A1 B1 deneme@4_den1 net@153 gnd deneme@4_in1 deneme@4_in2 net@111 net@202 vdd _3bit-comparator_enyeni__1bit
+Xdeneme@5 A0 B0 deneme@5_den1 net@202 gnd deneme@5_in1 deneme@5_in2 net@109 O3 vdd _3bit-comparator_enyeni__1bit
+Xor2@0 net@29 net@136 gnd O1 vdd _6-comp_en_yeni__or2
+Xor2@2 net@455 net@247 gnd O2 vdd _6-comp_en_yeni__or2
+
+* Spice Code nodes in cell cell '6-comp{lay}'
+vdd Vdd 0 DC 5
+vin A5 0 DC 5
+vin2 B5 0 DC 0
+vin3 A4 0 DC 5
+vin4 B4 0 DC 0
+vin5 A3 0 DC 5
+vin7 B3 0 DC 0
+vin8 A2 0 DC 0
+vin9 B2 0 DC 5
+vin10 A1 0 DC 0
+vin11 B1 0 DC 0
+vin12 A0 0 DC 0
+vin13 B0 0 DC 0
+vin14 En 0 DC 5
+cload Out 0 50fF
+.tran 100ns
+.include C5_models.txt
+.END
+.END
+.END
